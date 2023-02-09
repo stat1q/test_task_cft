@@ -13,7 +13,7 @@ public class Main {
 //       code = str.codePointAt(i);
     }
 
-    String[] argsNew = new String[]{"-d", "-s", "asf"};
+    String[] argsNew = new String[]{"-d", "-s", "-s", "jkashgf"};
 
     try {
         Parser parser = new Parser(argsNew);

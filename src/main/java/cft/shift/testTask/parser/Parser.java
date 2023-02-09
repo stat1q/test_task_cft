@@ -9,8 +9,9 @@ public class Parser {
     String outputFileName;
     ArrayList<String> inputFilesName;
 
-    boolean FileTypeDefined = false;
-
+//    boolean FileTypeDefined = false;
+    boolean isSortType = false;
+    boolean isDataType = false;
     public Parser(String[] args) {
         this.args = args;
     }
@@ -26,9 +27,11 @@ public class Parser {
         if (checkSortType()) {
             if (!checkDataType(argsNumber + 1))
                 throw new IllegalArgumentException("Неверный аргумент, должен быть 's, i'");
+            if (args[argsNumber + 2].charAt(0) == '-') throw new IllegalArgumentException("Введите корректное название выходного файла");
             outputFileName = args[argsNumber + 2];
             argsNumber += 3;
         } else if (checkDataType(argsNumber)) {
+            if (args[argsNumber + 1].charAt(0) == '-') throw new IllegalArgumentException("Введите корректное название выходного файла");
             outputFileName = args[argsNumber + 1];
             argsNumber += 2;
         }
@@ -41,7 +44,6 @@ public class Parser {
 
     public boolean checkDataType(int argsNumber) {
         if (args[argsNumber].length() != 2) throw new IllegalArgumentException("Неверная длина аргмента");
-        boolean isDataType = false;
         if (args[argsNumber].charAt(1) == 's' || args[argsNumber].charAt(1) == 'i') {
             isDataType = true;
             if (args[argsNumber].charAt(1) == 'i') {
@@ -57,10 +59,8 @@ public class Parser {
 
     public boolean checkSortType() {
         if (args[0].length() != 2) throw new IllegalArgumentException("Неверная длина аргмента");
-        boolean isSortType = false;
         if (args[0].charAt(1) == 'a' || args[0].charAt(1) == 'd') {
             isSortType = true;
-//            FileTypeDefined = true;
             if (args[0].charAt(1) == 'a') {
                 sortType = SortType.UPPERSORT;
                 System.out.println("Сортировка по возрастанию");
