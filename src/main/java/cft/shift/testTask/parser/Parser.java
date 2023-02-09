@@ -1,6 +1,7 @@
 package cft.shift.testTask.parser;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class Parser {
     private final String[] args;
@@ -9,9 +10,10 @@ public class Parser {
     String outputFileName;
     ArrayList<String> inputFilesName;
 
-//    boolean FileTypeDefined = false;
+    //    boolean FileTypeDefined = false;
     boolean isSortType = false;
     boolean isDataType = false;
+
     public Parser(String[] args) {
         this.args = args;
     }
@@ -27,18 +29,19 @@ public class Parser {
         if (checkSortType()) {
             if (!checkDataType(argsNumber + 1))
                 throw new IllegalArgumentException("Неверный аргумент, должен быть 's, i'");
-            if (args[argsNumber + 2].charAt(0) == '-') throw new IllegalArgumentException("Введите корректное название выходного файла");
-            outputFileName = args[argsNumber + 2];
-            argsNumber += 3;
-        } else if (checkDataType(argsNumber)) {
-            if (args[argsNumber + 1].charAt(0) == '-') throw new IllegalArgumentException("Введите корректное название выходного файла");
-            outputFileName = args[argsNumber + 1];
             argsNumber += 2;
+            argsNumber = checkOutputFileName(argsNumber);
+//            System.out.println(outputFileName);
+        } else if (checkDataType(argsNumber)) {
+            argsNumber++;
+            argsNumber = checkOutputFileName(argsNumber);
+//            System.out.println(outputFileName);
         }
         for (int i = argsNumber; i < args.length; i++) {
-            inputFilesName.add(args[argsNumber]);
-            System.out.println(args[i]);
+//            System.out.println(argsNumber);
+            inputFilesName.add(args[i]);
         }
+//        System.out.println(inputFilesName);
         if (inputFilesName.isEmpty()) throw new IllegalArgumentException("Нет входных файлов");
     }
 
@@ -70,6 +73,14 @@ public class Parser {
             }
         }
         return isSortType;
+    }
+
+    public int checkOutputFileName(int argsNumber) {
+        if (args[argsNumber].charAt(0) == '-')
+            throw new IllegalArgumentException("Введите корректное название выходного файла");
+        outputFileName = args[argsNumber];
+        argsNumber++;
+        return argsNumber;
     }
 
     public void print() {
