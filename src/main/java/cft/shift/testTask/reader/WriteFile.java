@@ -9,12 +9,20 @@ import java.util.Scanner;
 public class WriteFile {
 
 //    public String outputFilePath = "E:\\JavaProjects\\Test\\test_task_cft\\OutputFiles\\";
-    public String outputFilePath = "out.txt";
-//    public String outputFileName = null;
+//    public String outputFilePath = "out.txt";
     public FileWriter writer;
 
-    public WriteFile(String fileName) throws FileNotFoundException, IOException {
-        this.outputFilePath = outputFilePath + fileName;
+    public FileWriter getWriter() {
+        return writer;
+    }
+
+    public void setWriter(FileWriter writer) {
+        this.writer = writer;
+    }
+
+    public WriteFile(String outputFilePath) throws FileNotFoundException, IOException {
+//        File outputFile = new File(outputFilePath);
+//        this.outputFilePath = outputFilePath + fileName;
         this.writer = new FileWriter(new File(outputFilePath));
     }
 

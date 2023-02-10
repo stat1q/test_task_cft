@@ -40,6 +40,7 @@ public class Parser {
     public void setOutputFileName(String outputFileName) {
         this.outputFileName = outputFileName;
     }
+
     public ArrayList<String> getInputFilesName() {
         return inputFilesName;
     }
