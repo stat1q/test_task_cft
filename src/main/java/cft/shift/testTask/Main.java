@@ -1,24 +1,40 @@
 package cft.shift.testTask;
 
 import cft.shift.testTask.parser.Parser;
+import cft.shift.testTask.reader.ReadFile;
+import cft.shift.testTask.reader.WriteFile;
+import cft.shift.testTask.sort.Sort;
+
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
-    String str = "@abczA";
-    char one = '@';
-    int code;
-    int n = str.length();
 
-    for (int i = 0; i < n; i++) {
-//       code = str.codePointAt(i);
-    }
+    String[] argsNew = new String[]{"-d", "-s", "out.txt", "in2.txt"};
 
-    String[] argsNew = new String[]{"-d", "-s", "sasff", "jkashgf", "asf75861", "124"};
+    String fileName = "E:\\JavaProjects\\Test\\test_task_cft\\InputFiles\\in2.txt";
+
+//    Path path = Paths.get("").toAbsolutePath();
+//    String path = System.getProperty("user.dir");
+//      String currentPath = path.toString();
+//        System.out.println(currentPath);
 
     try {
-        Parser parser = new Parser(argsNew);
+
+        Sort sort = new Sort(new Parser(argsNew));
+//        Parser parser = new Parser(argsNew);
 //        parser.print();
-        parser.readArgs();
+//        parser.readArgs();
+
+//        ReadFile read = new ReadFile(fileName);
+//        read.readString();
+
+
+//        WriteFile write = new WriteFile(parser.getOutputFileName());
+
+
     } catch (Exception e) {
         System.out.println(e.getMessage());
     }

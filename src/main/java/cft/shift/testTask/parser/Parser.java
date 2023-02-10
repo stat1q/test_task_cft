@@ -1,21 +1,51 @@
 package cft.shift.testTask.parser;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 public class Parser {
     private final String[] args;
     SortType sortType = SortType.UPPERSORT;
     DataType dataType;
     String outputFileName;
-    ArrayList<String> inputFilesName;
-
-    //    boolean FileTypeDefined = false;
+    ArrayList<String> inputFilesName = null;
     boolean isSortType = false;
     boolean isDataType = false;
 
     public Parser(String[] args) {
         this.args = args;
+    }
+
+    public DataType getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(DataType dataType) {
+        this.dataType = dataType;
+    }
+
+    public SortType getSortType() {
+        return sortType;
+    }
+
+    public void setSortType(SortType sortType) {
+        this.sortType = sortType;
+    }
+
+    public String getOutputFileName() {
+        return outputFileName;
+    }
+
+    public void setOutputFileName(String outputFileName) {
+        this.outputFileName = outputFileName;
+    }
+    public ArrayList<String> getInputFilesName() {
+        return inputFilesName;
+    }
+
+    public void setInputFilesName(ArrayList<String> inputFilesName) {
+        this.inputFilesName = inputFilesName;
     }
 
     public void readArgs() {
@@ -46,30 +76,30 @@ public class Parser {
     }
 
     public boolean checkDataType(int argsNumber) {
-        if (args[argsNumber].length() != 2) throw new IllegalArgumentException("Неверная длина аргмента");
+        if (args[argsNumber].length() != 2) throw new IllegalArgumentException("Неверная длина аргумента");
         if (args[argsNumber].charAt(1) == 's' || args[argsNumber].charAt(1) == 'i') {
             isDataType = true;
             if (args[argsNumber].charAt(1) == 'i') {
                 dataType = DataType.INTEGER;
-                System.out.println("файл integer");
+//                System.out.println("файл integer");
             } else if (args[argsNumber].charAt(1) == 's') {
                 dataType = DataType.STRING;
-                System.out.println("файл string");
+//                System.out.println("файл string");
             }
         }
         return isDataType;
     }
 
     public boolean checkSortType() {
-        if (args[0].length() != 2) throw new IllegalArgumentException("Неверная длина аргмента");
+        if (args[0].length() != 2) throw new IllegalArgumentException("Неверная длина аргумента");
         if (args[0].charAt(1) == 'a' || args[0].charAt(1) == 'd') {
             isSortType = true;
             if (args[0].charAt(1) == 'a') {
                 sortType = SortType.UPPERSORT;
-                System.out.println("Сортировка по возрастанию");
+//                System.out.println("Сортировка по возрастанию");
             } else if (args[0].charAt(1) == 'd') {
                 sortType = SortType.LOWERSORT;
-                System.out.println("Сортировка по убыванию");
+//                System.out.println("Сортировка по убыванию");
             }
         }
         return isSortType;
@@ -89,4 +119,10 @@ public class Parser {
             System.out.println(args[i]);
         }
     }
+
+    public String getFilePath() {
+        Path path = Paths.get("").toAbsolutePath();
+        return path.toString();
+    }
+
 }
