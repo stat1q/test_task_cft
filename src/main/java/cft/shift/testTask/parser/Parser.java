@@ -21,32 +21,16 @@ public class Parser {
         return dataType;
     }
 
-    public void setDataType(DataType dataType) {
-        this.dataType = dataType;
-    }
-
     public SortType getSortType() {
         return sortType;
-    }
-
-    public void setSortType(SortType sortType) {
-        this.sortType = sortType;
     }
 
     public String getOutputFileName() {
         return outputFileName;
     }
 
-    public void setOutputFileName(String outputFileName) {
-        this.outputFileName = outputFileName;
-    }
-
     public ArrayList<String> getInputFilesName() {
         return inputFilesName;
-    }
-
-    public void setInputFilesName(ArrayList<String> inputFilesName) {
-        this.inputFilesName = inputFilesName;
     }
 
     public void readArgs() {
@@ -62,17 +46,13 @@ public class Parser {
                 throw new IllegalArgumentException("Неверный аргумент, должен быть 's, i'");
             argsNumber += 2;
             argsNumber = checkOutputFileName(argsNumber);
-//            System.out.println(outputFileName);
         } else if (checkDataType(argsNumber)) {
             argsNumber++;
             argsNumber = checkOutputFileName(argsNumber);
-//            System.out.println(outputFileName);
         }
         for (int i = argsNumber; i < args.length; i++) {
-//            System.out.println(argsNumber);
             inputFilesName.add(args[i]);
         }
-//        System.out.println(inputFilesName);
         if (inputFilesName.isEmpty()) throw new IllegalArgumentException("Нет входных файлов");
     }
 
@@ -112,13 +92,6 @@ public class Parser {
         outputFileName = args[argsNumber];
         argsNumber++;
         return argsNumber;
-    }
-
-    public void print() {
-        if (args.length == 0) throw new IllegalArgumentException("ERROR");
-        for (int i = 0; i < args.length; i++) {
-            System.out.println(args[i]);
-        }
     }
 
     public String getFilePath() {

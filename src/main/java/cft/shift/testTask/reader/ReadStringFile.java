@@ -7,14 +7,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class ReadFile {
+public class ReadStringFile {
     public Scanner scanner;
     public String fileName;
     public String previous;
     public String current;
     SortType sortType;
 
-    public ReadFile(String fileName, SortType sortType) throws FileNotFoundException, EOFException {
+//    ReadStringFile second;
+
+    public ReadStringFile(String fileName, SortType sortType) throws FileNotFoundException, EOFException {
         this.fileName = fileName;
         this.scanner = new Scanner(new File(fileName));
         this.sortType = sortType;
@@ -25,17 +27,14 @@ public class ReadFile {
         return this.current;
     }
 
-    public void setCurrent(String current) {
-        this.current = current;
-    }
-
-    public String readNextLine() throws EOFException {
+    public void readNextLine() throws EOFException {
         if (!scanner.hasNextLine()) throw new EOFException("EOF");
         this.previous = this.current;
         this.current = scanner.nextLine();
         if (this.current.indexOf(' ') != -1 || (this.previous != null && sortingType(this.previous, this.current)))
-            this.current = readNextLine();
-        return this.current;
+//            this.current =
+                    readNextLine();
+//        return this.current;
     }
 
     public boolean sortingType(String previous, String current) {

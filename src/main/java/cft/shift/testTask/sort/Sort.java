@@ -2,7 +2,7 @@ package cft.shift.testTask.sort;
 
 import cft.shift.testTask.parser.Parser;
 import cft.shift.testTask.parser.SortType;
-import cft.shift.testTask.reader.ReadFile;
+import cft.shift.testTask.reader.ReadStringFile;
 
 import java.io.EOFException;
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 
 public class Sort {
     public Parser parser;
-    public int minIndex;
+    public int extremeIndex;
 
     public Sort(Parser parser) throws IOException {
         this.parser = parser;
@@ -25,29 +25,29 @@ public class Sort {
         ArrayList<String> inputFilesName = parser.getInputFilesName();
         String outputFilePath = parser.getFilePath() + "\\OutputFiles\\" + parser.getOutputFileName();
         FileWriter writer = new FileWriter(outputFilePath);
-        ArrayList<ReadFile> ReaderList = createReaderList(inputFilesName, parser.getSortType());
+        ArrayList<ReadStringFile> ReaderList = createReaderList(inputFilesName, parser.getSortType());
 
         while (!ReaderList.isEmpty()) {
-            this.minIndex = 0;
+            this.extremeIndex = 0;
             for (int i = 1; i < ReaderList.size(); i++) {
-                if (ReaderList.get(this.minIndex).sortingType(ReaderList.get(this.minIndex).getCurrent(), ReaderList.get(i).getCurrent()))
-                    this.minIndex = i;
+                if (ReaderList.get(this.extremeIndex).sortingType(ReaderList.get(this.extremeIndex).getCurrent(), ReaderList.get(i).getCurrent()))
+                    this.extremeIndex = i;
             }
-            writer.write(ReaderList.get(this.minIndex).getCurrent());
+            writer.write(ReaderList.get(this.extremeIndex).getCurrent());
             writer.append('\n');
             try {
-                ReaderList.get(this.minIndex).readNextLine();
+                ReaderList.get(this.extremeIndex).readNextLine();
             } catch (EOFException | NoSuchElementException e) {
-                ReaderList.remove(this.minIndex);
+                ReaderList.remove(this.extremeIndex);
             }
         }
         writer.close();
     }
 
-    public ArrayList<ReadFile> createReaderList(ArrayList<String> inputFilesName, SortType sortType) throws FileNotFoundException, EOFException {
-        ArrayList<ReadFile> ReaderList = new ArrayList<>();
+    public ArrayList<ReadStringFile> createReaderList(ArrayList<String> inputFilesName, SortType sortType) throws FileNotFoundException, EOFException {
+        ArrayList<ReadStringFile> ReaderList = new ArrayList<>();
         for (int i = 0; i < inputFilesName.size(); i++) {
-            ReadFile reader = new ReadFile(parser.getFilePath() + "\\InputFiles\\" + inputFilesName.get(i), sortType);
+            ReadStringFile reader = new ReadStringFile(parser.getFilePath() + "\\InputFiles\\" + inputFilesName.get(i), sortType);
             ReaderList.add(reader);
         }
         return ReaderList;
