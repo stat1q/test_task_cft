@@ -12,18 +12,18 @@ import java.nio.file.Paths;
 public class Main {
     public static void main(String[] args) {
 
-        String[] argsNew = new String[]{"-d", "-s", "out.txt", "in2.txt"};
+    String[] argsNew = new String[]{"-d", "-s", "out.txt", "in2.txt", "in3.txt", "in4.txt"};
 
-        String fileName = "E:\\JavaProjects\\Test\\test_task_cft\\InputFiles\\in2.txt";
+//    String fileName = "E:\\JavaProjects\\Test\\test_task_cft\\InputFiles\\in2.txt";
 
 //    Path path = Paths.get("").toAbsolutePath();
 //    String path = System.getProperty("user.dir");
 //      String currentPath = path.toString();
 //        System.out.println(currentPath);
 
-        try {
+    try {
 
-            Sort sort = new Sort(new Parser(argsNew));
+        Sort sort = new Sort(new Parser(argsNew));
 //        Parser parser = new Parser(argsNew);
 //        parser.print();
 //        parser.readArgs();
@@ -35,8 +35,8 @@ public class Main {
 //        WriteFile write = new WriteFile(parser.getOutputFileName());
 
 
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
+    }
     }
 }
