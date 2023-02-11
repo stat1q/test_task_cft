@@ -1,23 +1,23 @@
 package cft.shift.testTask.reader;
 
+import cft.shift.testTask.parser.SortType;
+
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReadFile {
     public Scanner scanner;
-    public ArrayList<String> filesName;
     public String fileName;
-    public String previuos;
+    public String previous;
     public String current;
+    SortType sortType;
 
-    public ReadFile(String fileName) throws FileNotFoundException, EOFException {
+    public ReadFile(String fileName, SortType sortType) throws FileNotFoundException, EOFException {
         this.fileName = fileName;
         this.scanner = new Scanner(new File(fileName));
+        this.sortType = sortType;
         readNextLine();
     }
 
@@ -29,48 +29,17 @@ public class ReadFile {
         this.current = current;
     }
 
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     public String readNextLine() throws EOFException {
         if (!scanner.hasNextLine()) throw new EOFException("EOF");
+        this.previous = this.current;
         this.current = scanner.nextLine();
-        if (this.current.indexOf(' ') != -1) {
-            System.out.println(this.current);
+        if (this.current.indexOf(' ') != -1 || (this.previous != null && sortingType(this.previous, this.current)))
             this.current = readNextLine();
-            System.out.println(this.current);
-        }
-
-//        System.out.printf(this.current);
         return this.current;
     }
 
-//    public void readString() {
-//        while (scanner.hasNextLine()) {
-//            String line = scanner.nextLine();
-////            if (line.indexOf(' ') != -1) throw new RuntimeException("Строка содержит пробел");
-//            if (line.indexOf(' ') != -1) line = scanner.nextLine();
-////            output.add(line);
-//            System.out.println(line);
-//        }
-//    }
-
-//    public void readInt() {
-//        while (scanner.hasNextInt()) {
-////            outputInt.add(scanner.nextInt());
-//            System.out.println(scanner.nextInt());
-//        }
-//    }
-
-//    public String getFilePath() {
-//        Path path = Paths.get("").toAbsolutePath();
-//        return path.toString();
-//    }
-
+    public boolean sortingType(String previous, String current) {
+        return (sortType == SortType.UPPERSORT) ? previous.compareTo(current) > 0 : previous.compareTo(current) < 0;
+    }
 
 }
