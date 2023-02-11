@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 public class Main {
     public static void main(String[] args) {
 
-    String[] argsNew = new String[]{"-d", "-s", "out.txt", "in2.txt", "in3.txt", "in4.txt"};
+    String[] argsNew = new String[]{"-d", "-s", "out", "in2.txt", "in3.txt"};
 
 //    String fileName = "E:\\JavaProjects\\Test\\test_task_cft\\InputFiles\\in2.txt";
 

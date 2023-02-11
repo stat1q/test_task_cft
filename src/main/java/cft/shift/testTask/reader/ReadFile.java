@@ -22,7 +22,7 @@ public class ReadFile {
     }
 
     public String getCurrent() {
-        return current;
+        return this.current;
     }
 
     public void setCurrent(String current) {
@@ -40,6 +40,12 @@ public class ReadFile {
     public String readNextLine() throws EOFException {
         if (!scanner.hasNextLine()) throw new EOFException("EOF");
         this.current = scanner.nextLine();
+        if (this.current.indexOf(' ') != -1) {
+            System.out.println(this.current);
+            this.current = readNextLine();
+            System.out.println(this.current);
+        }
+
 //        System.out.printf(this.current);
         return this.current;
     }

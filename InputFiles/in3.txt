@@ -1,5 +1,4 @@
-ac
-ahubv
-bc
-hh
-kom
+a
+b
+c
+m
