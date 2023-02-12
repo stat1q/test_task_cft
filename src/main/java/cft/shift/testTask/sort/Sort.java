@@ -22,9 +22,9 @@ public class Sort {
     public Sort(Parser parser) throws IOException {
         this.parser = parser;
         parser.readArgs();
-        this.inputFilesPath = parser.getFilePath() + "\\InputFiles\\";
+        this.inputFilesPath = parser.getFilePath() + "/InputFiles/";
         this.inputFilesName = parser.getInputFilesName();
-        this.outputFilePath = parser.getFilePath() + "\\OutputFiles\\" + parser.getOutputFileName();
+        this.outputFilePath = parser.getFilePath() + "/OutputFiles/" + parser.getOutputFileName();
         this.writer = new FileWriter(this.outputFilePath);
         selectSortType();
     }
