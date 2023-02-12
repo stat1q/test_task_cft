@@ -38,13 +38,14 @@ public class Parser {
         int argsNumber = 0;
         inputFilesName = new ArrayList<>();
 
-        if (args.length < 3) throw new IllegalArgumentException("Wrong numbers of argument");
-        if (args[0].charAt(0) != '-') throw new IllegalArgumentException("Неверный аргумент, нужен знак '-'");
+        if (args.length < 3) throw new IllegalArgumentException("Incorrect number of arguments!");
+        if (args[0].charAt(0) != '-')
+            throw new IllegalArgumentException("Wrong argument syntax, need a sign '-'");
         if (!checkSortType() && !checkDataType(argsNumber))
-            throw new IllegalArgumentException("Неверный аргумент, должен быть 's, i, a, d'");
+            throw new IllegalArgumentException("Wrong first argument, should be: '-s', '-i', '-a', '-d'");
         if (checkSortType()) {
             if (!checkDataType(argsNumber + 1))
-                throw new IllegalArgumentException("Неверный аргумент, должен быть 's, i'");
+                throw new IllegalArgumentException("Wrong second argument, should be: '-s' or '-i'");
             argsNumber += 2;
             argsNumber = checkOutputFileName(argsNumber);
         } else if (checkDataType(argsNumber)) {
@@ -52,34 +53,30 @@ public class Parser {
             argsNumber = checkOutputFileName(argsNumber);
         }
         inputFilesName.addAll(Arrays.asList(args).subList(argsNumber, args.length));
-        if (inputFilesName.isEmpty()) throw new IllegalArgumentException("Нет входных файлов");
+        if (inputFilesName.isEmpty()) throw new IllegalArgumentException("No input files!");
     }
 
     public boolean checkDataType(int argsNumber) {
-        if (args[argsNumber].length() != 2) throw new IllegalArgumentException("Неверная длина аргумента");
+        if (args[argsNumber].length() != 2) throw new IllegalArgumentException("Incorrect argument length!");
         if (args[argsNumber].charAt(1) == 's' || args[argsNumber].charAt(1) == 'i') {
             isDataType = true;
             if (args[argsNumber].charAt(1) == 'i') {
                 dataType = DataType.INTEGER;
-//                System.out.println("файл integer");
             } else if (args[argsNumber].charAt(1) == 's') {
                 dataType = DataType.STRING;
-//                System.out.println("файл string");
             }
         }
         return isDataType;
     }
 
     public boolean checkSortType() {
-        if (args[0].length() != 2) throw new IllegalArgumentException("Неверная длина аргумента");
+        if (args[0].length() != 2) throw new IllegalArgumentException("Incorrect argument length!");
         if (args[0].charAt(1) == 'a' || args[0].charAt(1) == 'd') {
             isSortType = true;
             if (args[0].charAt(1) == 'a') {
                 sortType = SortType.UPPERSORT;
-//                System.out.println("Сортировка по возрастанию");
             } else if (args[0].charAt(1) == 'd') {
                 sortType = SortType.LOWERSORT;
-//                System.out.println("Сортировка по убыванию");
             }
         }
         return isSortType;
@@ -87,7 +84,7 @@ public class Parser {
 
     public int checkOutputFileName(int argsNumber) {
         if (args[argsNumber].charAt(0) == '-')
-            throw new IllegalArgumentException("Введите корректное название выходного файла");
+            throw new IllegalArgumentException("A flag is entered instead of the output file name, or the order of the parameters is mixed up!");
         outputFileName = args[argsNumber];
         argsNumber++;
         return argsNumber;
