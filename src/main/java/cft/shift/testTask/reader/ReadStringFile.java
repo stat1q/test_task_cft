@@ -6,14 +6,12 @@ import java.io.*;
 import java.util.Scanner;
 
 public class ReadStringFile implements ReadFile<String> {
-    public Scanner scanner;
-    public String fileName;
-    public String previous;
-    public String current;
-    SortType sortType;
+    private final Scanner scanner;
+    private final SortType sortType;
+    private String current;
+
 
     public ReadStringFile(String fileName, SortType sortType) throws FileNotFoundException, EOFException {
-        this.fileName = fileName;
         this.scanner = new Scanner(new File(fileName));
         this.sortType = sortType;
         readNextLine();
@@ -27,9 +25,10 @@ public class ReadStringFile implements ReadFile<String> {
     @Override
     public void readNextLine() throws EOFException {
         if (!scanner.hasNextLine()) throw new EOFException("EOF");
-        this.previous = this.current;
+        String previous;
+        previous = this.current;
         this.current = scanner.nextLine();
-        if (this.current.indexOf(' ') != -1 || (this.previous != null && sortingType(this.previous, this.current)))
+        if (this.current.indexOf(' ') != -1 || (previous != null && sortingType(previous, this.current)))
             readNextLine();
     }
 

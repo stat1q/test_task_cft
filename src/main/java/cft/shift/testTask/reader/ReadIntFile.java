@@ -6,14 +6,12 @@ import java.io.*;
 import java.util.Scanner;
 
 public class ReadIntFile implements ReadFile<Integer> {
-    public Scanner scanner;
-    public String fileName;
-    public Integer previous;
-    public Integer current;
-    SortType sortType;
+    private final Scanner scanner;
+    private final SortType sortType;
+    private Integer current;
+
 
     public ReadIntFile(String fileName, SortType sortType) throws FileNotFoundException, EOFException {
-        this.fileName = fileName;
         this.scanner = new Scanner(new File(fileName));
         this.sortType = sortType;
         readNextLine();
@@ -27,9 +25,10 @@ public class ReadIntFile implements ReadFile<Integer> {
     @Override
     public void readNextLine() throws EOFException {
         if (!scanner.hasNextInt()) throw new EOFException("EOF");
-        this.previous = this.current;
+        Integer previous;
+        previous = this.current;
         this.current = scanner.nextInt();
-        if (this.previous != null && sortingType(this.previous, this.current))
+        if (previous != null && sortingType(previous, this.current))
             readNextLine();
     }
 

@@ -7,12 +7,12 @@ import java.util.Arrays;
 
 public class Parser {
     private final String[] args;
-    SortType sortType = SortType.UPPERSORT;
-    DataType dataType;
-    String outputFileName;
-    ArrayList<String> inputFilesName = null;
-    boolean isSortType = false;
-    boolean isDataType = false;
+    private SortType sortType = SortType.UPPERSORT;
+    private DataType dataType;
+    private String outputFileName;
+    private ArrayList<String> inputFilesName = null;
+    private boolean isSortType = false;
+    private boolean isDataType = false;
 
     public Parser(String[] args) {
         this.args = args;
@@ -37,7 +37,6 @@ public class Parser {
     public void readArgs() {
         int argsNumber = 0;
         inputFilesName = new ArrayList<>();
-
         if (args.length < 3) throw new IllegalArgumentException("Incorrect number of arguments!");
         if (args[0].charAt(0) != '-')
             throw new IllegalArgumentException("Wrong argument syntax, need a sign '-'");
@@ -56,7 +55,7 @@ public class Parser {
         if (inputFilesName.isEmpty()) throw new IllegalArgumentException("No input files!");
     }
 
-    public boolean checkDataType(int argsNumber) {
+    private boolean checkDataType(int argsNumber) {
         if (args[argsNumber].length() != 2) throw new IllegalArgumentException("Incorrect argument length!");
         if (args[argsNumber].charAt(1) == 's' || args[argsNumber].charAt(1) == 'i') {
             isDataType = true;
@@ -69,7 +68,7 @@ public class Parser {
         return isDataType;
     }
 
-    public boolean checkSortType() {
+    private boolean checkSortType() {
         if (args[0].length() != 2) throw new IllegalArgumentException("Incorrect argument length!");
         if (args[0].charAt(1) == 'a' || args[0].charAt(1) == 'd') {
             isSortType = true;
@@ -82,7 +81,7 @@ public class Parser {
         return isSortType;
     }
 
-    public int checkOutputFileName(int argsNumber) {
+    private int checkOutputFileName(int argsNumber) {
         if (args[argsNumber].charAt(0) == '-')
             throw new IllegalArgumentException("A flag is entered instead of the output file name, or the order of the parameters is mixed up!");
         outputFileName = args[argsNumber];
