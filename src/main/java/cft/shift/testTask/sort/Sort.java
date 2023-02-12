@@ -1,11 +1,11 @@
 package cft.shift.testTask.sort;
 
+import cft.shift.testTask.parser.DataType;
 import cft.shift.testTask.parser.Parser;
-import cft.shift.testTask.parser.SortType;
+import cft.shift.testTask.reader.ReadIntFile;
 import cft.shift.testTask.reader.ReadStringFile;
 
 import java.io.EOFException;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,44 +14,71 @@ import java.util.NoSuchElementException;
 public class Sort {
     public Parser parser;
     public int extremeIndex;
+    public ArrayList<String> inputFilesName;
+    public String outputFilePath;
+    public FileWriter writer;
+    public String inputFilesPath;
 
     public Sort(Parser parser) throws IOException {
         this.parser = parser;
         parser.readArgs();
-        sort();
+        this.inputFilesPath = parser.getFilePath() + "\\InputFiles\\";
+        this.inputFilesName = parser.getInputFilesName();
+        this.outputFilePath = parser.getFilePath() + "\\OutputFiles\\" + parser.getOutputFileName();
+        this.writer = new FileWriter(this.outputFilePath);
+        selectSortType();
     }
 
-    public void sort() throws IOException {
-        ArrayList<String> inputFilesName = parser.getInputFilesName();
-        String outputFilePath = parser.getFilePath() + "\\OutputFiles\\" + parser.getOutputFileName();
-        FileWriter writer = new FileWriter(outputFilePath);
-        ArrayList<ReadStringFile> ReaderList = createReaderList(inputFilesName, parser.getSortType());
+    public void selectSortType() throws IOException {
+        if (parser.getDataType() == DataType.STRING) {
+            sortString();
+        } else if (parser.getDataType() == DataType.INTEGER) {
+            sortInt();
+        }
+    }
 
-        while (!ReaderList.isEmpty()) {
-            this.extremeIndex = 0;
-            for (int i = 1; i < ReaderList.size(); i++) {
-                if (ReaderList.get(this.extremeIndex).sortingType(ReaderList.get(this.extremeIndex).getCurrent(), ReaderList.get(i).getCurrent()))
-                    this.extremeIndex = i;
+    public void sortString() throws IOException {
+        ArrayList<ReadStringFile> StringReaderList = new ArrayList<>();
+        for (String fileName : inputFilesName) {
+            ReadStringFile reader = new ReadStringFile(inputFilesPath + fileName, parser.getSortType());
+            StringReaderList.add(reader);
+        }
+        while (!StringReaderList.isEmpty()) {
+            extremeIndex = 0;
+            for (int i = 1; i < StringReaderList.size(); i++) {
+                if (StringReaderList.get(extremeIndex).sortingType(StringReaderList.get(extremeIndex).getCurrent(), StringReaderList.get(i).getCurrent()))
+                    extremeIndex = i;
             }
-            writer.write(ReaderList.get(this.extremeIndex).getCurrent());
-            writer.append('\n');
+            StringReaderList.get(extremeIndex).writeLine(writer);
             try {
-                ReaderList.get(this.extremeIndex).readNextLine();
+                StringReaderList.get(extremeIndex).readNextLine();
             } catch (EOFException | NoSuchElementException e) {
-                ReaderList.remove(this.extremeIndex);
+                StringReaderList.remove(extremeIndex);
             }
         }
         writer.close();
     }
 
-    public ArrayList<ReadStringFile> createReaderList(ArrayList<String> inputFilesName, SortType sortType) throws FileNotFoundException, EOFException {
-        ArrayList<ReadStringFile> ReaderList = new ArrayList<>();
-        for (int i = 0; i < inputFilesName.size(); i++) {
-            ReadStringFile reader = new ReadStringFile(parser.getFilePath() + "\\InputFiles\\" + inputFilesName.get(i), sortType);
-            ReaderList.add(reader);
+    public void sortInt() throws IOException {
+        ArrayList<ReadIntFile> IntReaderList = new ArrayList<>();
+        for (String fileName : inputFilesName) {
+            ReadIntFile reader = new ReadIntFile(inputFilesPath + fileName, parser.getSortType());
+            IntReaderList.add(reader);
         }
-        return ReaderList;
+        while (!IntReaderList.isEmpty()) {
+            extremeIndex = 0;
+            for (int i = 1; i < IntReaderList.size(); i++) {
+                if (IntReaderList.get(extremeIndex).sortingType(IntReaderList.get(extremeIndex).getCurrent(), IntReaderList.get(i).getCurrent()))
+                    extremeIndex = i;
+            }
+            IntReaderList.get(extremeIndex).writeLine(writer);
+            try {
+                IntReaderList.get(extremeIndex).readNextLine();
+            } catch (EOFException | NoSuchElementException e) {
+                IntReaderList.remove(extremeIndex);
+            }
+        }
+        writer.close();
     }
-
 
 }

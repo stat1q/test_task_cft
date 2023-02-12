@@ -3,6 +3,7 @@ package cft.shift.testTask.parser;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Parser {
     private final String[] args;
@@ -50,9 +51,7 @@ public class Parser {
             argsNumber++;
             argsNumber = checkOutputFileName(argsNumber);
         }
-        for (int i = argsNumber; i < args.length; i++) {
-            inputFilesName.add(args[i]);
-        }
+        inputFilesName.addAll(Arrays.asList(args).subList(argsNumber, args.length));
         if (inputFilesName.isEmpty()) throw new IllegalArgumentException("Нет входных файлов");
     }
 
