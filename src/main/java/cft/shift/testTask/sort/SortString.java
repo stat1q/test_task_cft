@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-public class SortString {
+public class SortString implements Sort{
 
+    @Override
     public void sort(String inputFilesPath, ArrayList<String> inputFilesName, SortType sortType, FileWriter writer) throws IOException {
         ArrayList<ReadStringFile> StringReaderList = new ArrayList<>();
         for (String fileName : inputFilesName) {

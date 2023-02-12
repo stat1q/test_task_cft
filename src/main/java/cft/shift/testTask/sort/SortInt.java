@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 
 public class SortInt implements Sort {
 
+    @Override
     public void sort(String inputFilesPath, ArrayList<String> inputFilesName, SortType sortType, FileWriter writer) throws IOException {
         ArrayList<ReadIntFile> IntReaderList = new ArrayList<>();
         for (String fileName : inputFilesName) {
